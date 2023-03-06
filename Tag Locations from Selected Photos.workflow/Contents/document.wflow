@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>520</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run JavaScript.action</string>
+				<key>ActionName</key>
+				<string>Run JavaScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>function run(input, parameters) {	debugger// Get Photos instancevar photos = Application("Photos")photos.includeStandardAdditions = trueconsole.log(photos.selection().length)if (photos.selection().length) {	var prelocation = photos.selection()[0].location()	var predate = Date.parse(photos.selection()[0].date())	var postlocation = null	var postdate = null	// Render work queue (1-pass)	for (var i=1;i&lt;photos.selection().length;i++) {		var photo = photos.selection()[i]		var date = Date.parse(photo.date())		var location = photo.location()		// If photo doesn't have a geolocation		if (location[0]==null &amp;&amp; location[1]==null) {			// Check if post values exist			if (postlocation &amp;&amp; postdate) {				var newlocation = [prelocation[0]+(postlocation[0]-prelocation[0])*(date-predate)/(postdate-predate),prelocation[1]+(postlocation[1]-prelocation[1])*(date-predate)/(postdate-predate)]				photo.location=newlocation			} else {				var j = 1				while((i+j)&lt;photos.selection().length &amp;&amp; photos.selection()[i+j].location()[0]==null) {					j++				}				if ((i+j)&lt;photos.selection().length) {					postlocation = photos.selection()[i+j].location()					postdate = photos.selection()[i+j].date()										var newlocation = [prelocation[0]+(postlocation[0]-prelocation[0])*(date-predate)/(postdate-predate),prelocation[1]+(postlocation[1]-prelocation[1])*(date-predate)/(postdate-predate)]					photo.location=newlocation				} else {					console.log("Error: selection should contin geolocation photos at the beginning and the end")				}			}		} else {			prelocation = location			predate = date			postlocation = null;			postdate = null;		}		console.log("Progress: " + (i + 1) + " of " + photos.selection().length)	}} else {	console.log("You need to select photos in Photos app.")}	return input;}</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunJavaScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunJavaScriptAction</string>
+				<key>InputUUID</key>
+				<string>EA9F69C9-5F22-4D59-8263-10E485FD3095</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+					<string>JavaScript</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>47A5A637-89A1-469F-ACB7-533967F3DBFE</string>
+				<key>UUID</key>
+				<string>4288EF09-7FD0-495D-9B21-2B98007E8A51</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>function run(input, parameters) {
+	
+	// Your script goes here
+
+	return input;
+}</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>309.000000:368.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>variables</key>
+	<array>
+		<dict>
+			<key>UUID</key>
+			<string>6E2ABD2F-8027-40AA-B57E-5E3A68C04E73</string>
+			<key>identifier</key>
+			<string>com.apple.Automator.Variable.Storage</string>
+			<key>name</key>
+			<string>PrevGeo</string>
+		</dict>
+	</array>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleID</key>
+		<string>com.apple.Photos</string>
+		<key>applicationBundleIDsByPath</key>
+		<dict>
+			<key>/System/Applications/Photos.app</key>
+			<string>com.apple.Photos</string>
+		</dict>
+		<key>applicationPath</key>
+		<string>/System/Applications/Photos.app</string>
+		<key>applicationPaths</key>
+		<array>
+			<string>/System/Applications/Photos.app</string>
+		</array>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>11</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
+		<key>serviceApplicationBundleID</key>
+		<string>com.apple.Photos</string>
+		<key>serviceApplicationPath</key>
+		<string>/System/Applications/Photos.app</string>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
+		<integer>1</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
